@@ -1,0 +1,38 @@
+<div class="add-contact-popover flex justify-center align-center">
+  <div class="contact-box flex flex-column">
+    <h1>Edit contact</h1>
+    <form class="form flex flex-column align-center" [formGroup]="form" (ngSubmit)="submit(form.value)" novalidate>
+      <div class="avatar">
+        <img *ngIf="form.get('urlAvatar').value" [src]="form.get('urlAvatar').value" alt="">
+        <div *ngIf="!form.get('urlAvatar').value" class="not-image">
+          {{form.get('firstName').value[0]}}
+        </div>
+        <img class="add-image" src="../../../assets/icons/plus.svg" (click)="addImage()" />
+      </div>
+      <mat-form-field>
+        <mat-label>Fisrt Name</mat-label>
+        <input type="text" matInput required formControlName="firstName" placeholder="Firs Name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Last Name</mat-label>
+        <input type="text" matInput required formControlName="lastName" placeholder="Last Name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Tel.</mat-label>
+        <input type="text" placeholder="+380688750644" (keypress)="keyPress($event)" matInput required maxlength="12"
+          formControlName="phoneNumber">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Descriptions</mat-label>
+        <input type="text" matInput formControlName="descriptions" placeholder="Descriptions">
+      </mat-form-field>
+
+      <button type="submit" mat-flat-button style="text-transform: uppercase;" color="primary">EDIT CONTACT</button>
+    </form>
+    <button type="submit" mat-flat-button style="text-transform: uppercase;" color="primary"
+      (click)="cancel()">Cancel</button>
+  </div>
+</div>

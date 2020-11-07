@@ -1,0 +1,56 @@
+<header class="header flex justify-center">Phone book</header>
+<mat-drawer-container class="contact-container" autosize>
+
+    <div class="contacts flex" *ngFor="let item of contacts; let i = index">
+
+        <mat-card>
+            <div (click)="drawer.toggle()" class="flex align-center " (click)="getContact(item.id)">
+                <img *ngIf="item.urlAvatar" [src]="item.urlAvatar" alt="Image">
+                <div *ngIf="!item.urlAvatar" class="not-image">
+                    {{item.firstName[0]}}
+                </div>
+                <div>{{item.firstName}} {{item.lastName}}</div>
+                <div>{{item.phoneNumber}}</div>
+            </div>
+            <div class="flex action-buttons">
+                <button mat-flat-button color="primary" (click)="tuggleEditForm(item.id)">Edit</button>
+                <button mat-flat-button color="warn" (click)="toggleRemove(item.id)">Remove</button>
+            </div>
+        </mat-card>
+    </div>
+
+    <button class="add-contact" (click)="tuggleAddForm()" mat-flat-button style="text-transform: uppercase;"
+        color="primary">ADD CONTACT</button>
+
+    <mat-drawer #drawer class="sidenav" mode="side" position="end">
+        <div class="sidenav-body">
+            <h1>Contact</h1>
+            <div *ngIf="contactInfo">
+                <img *ngIf="contactInfo.urlAvatar" [src]="contactInfo.urlAvatar" alt="Image">
+                <div *ngIf="!contactInfo.urlAvatar" class="sidenav-not-image">
+                    {{contactInfo.firstName[0]}}
+                </div>
+                <div>{{contactInfo.firstName}} {{contactInfo.lastName}}</div>
+                <div>{{contactInfo.phoneNumber}}</div>
+                <div>{{contactInfo.descriptions}}</div>
+            </div>
+        </div>
+    </mat-drawer>
+
+</mat-drawer-container>
+
+<app-add-contacts-popover *ngIf="showAddForm" (showAddForm)="tuggleAddForm()"></app-add-contacts-popover>
+<app-edit-contacts-popover *ngIf="showEditForm" [contactInfo]="contactInfo" (showEditForm)="tuggleEditForm()">
+</app-edit-contacts-popover>
+
+<div *ngIf="showRemovePopover" class="delete-popover flex justify-center align-center">
+    <div class="delete-box flex flex-column">
+        <h1>Delete contact</h1>
+        <p>Do you want delete contact?</p>
+        <div class="delete-act flex justify-between">
+            <button type="submit" mat-flat-button style="text-transform: uppercase;" color="primary"
+                (click)="remove()">Yes</button>
+            <button mat-flat-button style="text-transform: uppercase;" color="primary" (click)="cancel()">No</button>
+        </div>
+    </div>
+</div>
