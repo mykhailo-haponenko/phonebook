@@ -34,40 +34,16 @@ export class AddContactsPopoverComponent implements OnInit {
     }
   }
 
-  get _firstName() {
-    return this.form.get('firstName');
-  }
-
-  get _lastName() {
-    return this.form.get('lastName');
-  }
-
-  get _phoneNumber() {
-    return this.form.get('phoneNumber');
-  }
-
   addImage() {
     this.form.controls['urlAvatar'].setValue(faker.image.avatar());
   }
 
   submit(values) {
-    if (this.checkValid()) {
+    if (this.form.valid) {
       console.log(values);
 
       this.contactsService.addContacts.next(values)
       this.showAddForm.emit(false);
-    }
-  }
-
-  checkValid() {
-    const firstName = !this._firstName.errors?.required;
-    const lastName = !this._lastName.errors?.required;
-    const phoneNumer = !this._phoneNumber.errors?.required;
-
-    if (firstName && lastName && phoneNumer) {
-      return true;
-    } else {
-      return false
     }
   }
 
